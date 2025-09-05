@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,26 +5,171 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Diploma Engineer - Home</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Admin login button (small circle top-right) */
+    #adminBtn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      width: 40px;
+      height: 40px;
+      background: #0b5;
+      border-radius: 50%;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    #adminForm {
+      display: none;
+      margin: 50px auto;
+      max-width: 400px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+
+    #adminForm input {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+
+    #logoutBtn {
+      display: none;
+      margin: 10px;
+      padding: 8px 15px;
+      background: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
   <header>
     <h1>📚 The Diploma Engineer</h1>
     <p>Welcome to The Diploma Engineer – Your one-stop solution for Notes, Question Papers, Manuals, Tools, and more!</p>
   </header>
 
+  <!-- Navigation -->
   <main>
     <h2>Explore Our Sections</h2>
     <nav class="nav-links">
-      <a href="notes.html">📝 Notes</a><hr />
-      <a href="manual.html">📘 Practical Manuals</a> <hr />
-      <a href="papers.html">📄 Question Papers</a> <hr />
-      <a href="tool.html">🛠️ Student Tools</a> <hr />
-      <a href="noteboo.html">📔 Notebooks</a> <hr />
+      <a href="notes.html">📝 Notes</a>
+      <a href="manuals.html">📘 Practical Manuals</a>
+      <a href="papers.html">📄 Question Papers</a>
+      <a href="tools.html">🛠️ Student Tools</a>
+      <a href="notebooks.html">📔 Notebooks</a>
     </nav>
   </main>
 
+  <!-- Footer -->
   <footer>
-    <p>© 2025 The Diploma Engineer | Made for Gaurav chavan diploma Students</p>
+    <p>© 2025 The Diploma Engineer | Made for Students</p>
   </footer>
+
+  <!-- Admin login button -->
+  <button id="adminBtn">A</button>
+
+  <!-- Admin Form -->
+  <div id="adminForm">
+    <h3>Add Content</h3>
+    <input type="text" id="subjectCode" placeholder="Subject Code">
+    <input type="text" id="subjectName" placeholder="Subject Name">
+    <input type="text" id="branch" placeholder="Branch">
+    <input type="text" id="year" placeholder="Year">
+    <input type="text" id="semester" placeholder="Semester">
+    <input type="text" id="pdfLink" placeholder="PDF Link">
+    <button onclick="saveData()">Save</button>
+    <button id="logoutBtn" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyASbxyA9INqhFYcZw1aCwfVg7xZFQzlFwk",
+      authDomain: "the-diploma-engineer.firebaseapp.com",
+      projectId: "the-diploma-engineer",
+      storageBucket: "the-diploma-engineer.appspot.com",
+      messagingSenderId: "597760822552",
+      appId: "1:597760822552:web:4043e1ad671777d63c226d",
+      measurementId: "G-7QNJW56DQL"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    const adminBtn = document.getElementById("adminBtn");
+    const adminForm = document.getElementById("adminForm");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const adminEmail = "gauravchavan1138@gmail.com"; // Only your email
+
+    // Login
+    adminBtn.addEventListener("click", async () => {
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        if (user.email === adminEmail) {
+          alert("Welcome Admin!");
+          adminForm.style.display = "block";
+          logoutBtn.style.display = "inline-block";
+        } else {
+          alert("Access Denied!");
+          signOut(auth);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
+    // Logout
+    function logout() {
+      signOut(auth).then(() => {
+        alert("Logged out!");
+        adminForm.style.display = "none";
+        logoutBtn.style.display = "none";
+      });
+    }
+    window.logout = logout;
+
+    // Save data
+    async function saveData() {
+      const subjectCode = document.getElementById("subjectCode").value;
+      const subjectName = document.getElementById("subjectName").value;
+      const branch = document.getElementById("branch").value;
+      const year = document.getElementById("year").value;
+      const semester = document.getElementById("semester").value;
+      const pdfLink = document.getElementById("pdfLink").value;
+
+      try {
+        await addDoc(collection(db, "resources"), {
+          subjectCode,
+          subjectName,
+          branch,
+          year,
+          semester,
+          pdfLink
+        });
+        alert("Content added successfully!");
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    }
+    window.saveData = saveData;
+  </script>
 </body>
 </html>
