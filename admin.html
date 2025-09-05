@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - The Diploma Engineer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🔐 Admin Panel</h1>
+    <p>Only for site admin (Gaurav Rajendra Chavan)</p>
+  </header>
+
+  <main>
+    <h2>Add New Entry</h2>
+    <form id="addDataForm">
+      <label>Section</label>
+      <select id="section" required>
+        <option value="">-- Select Section --</option>
+        <option value="notes">Notes</option>
+        <option value="manuals">Practical Manuals</option>
+        <option value="papers">Question Papers</option>
+        <option value="tools">Student Tools</option>
+        <option value="notebooks">Notebooks</option>
+      </select>
+
+      <label>Subject Code</label>
+      <input type="text" id="subjectCode" required>
+
+      <label>Subject Name</label>
+      <input type="text" id="subjectName" required>
+
+      <label>Branch</label>
+      <input type="text" id="branch" required>
+
+      <label>Year</label>
+      <input type="text" id="year" required>
+
+      <label>Semester</label>
+      <input type="text" id="semester" required>
+
+      <label>PDF Link</label>
+      <input type="url" id="pdfLink" required>
+
+      <button type="submit">Add</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>© 2025 The Diploma Engineer | Admin Only</p>
+  </footer>
+
+  <!-- Firebase Config + Admin Script -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>>
