@@ -22,3 +22,30 @@ async function loadData() {
 }
 
 loadData(); in
+
+
+
+// Function to create PDF boxes dynamically
+function renderPDFBoxes() {
+  const container = document.getElementById('box-container');
+  const pdfDataDiv = document.getElementById('pdf-data');
+  const pdfLines = Array.from(pdfDataDiv.children).map(div => div.textContent.trim());
+
+  pdfLines.forEach(line => {
+    const [branch, subject, semester, code, pdfLink] = line.split("|").map(item => item.trim());
+
+    const box = document.createElement('div');
+    box.classList.add('info-box');
+
+    box.innerHTML = `
+      <p><strong>${subject}</strong></p>
+      <p>${branch} | ${semester} | ${code}</p>
+      <a href="${pdfLink}" target="_blank">Open PDF</a>
+    `;
+
+    container.appendChild(box);
+  });
+}
+
+// Call the function
+renderPDFBoxes();
