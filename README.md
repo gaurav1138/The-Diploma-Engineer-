@@ -47,7 +47,7 @@ We welcome contributions!
 **Developer:** Gaurav Rajendra Chavan  
 - 📧 Email: gauravchavan1138@gmail.com  
 - 🌐 Website: [The Diploma Engineer](https://gaurav1138.github.io/The-Diploma-Engineer-/)  
-- 💼 LinkedIn: [Gaurav Chavan](https://www.linkedin.com/in/gaurav-chvan-776354344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) 
+- 💼 LinkedIn: [Gaurav Chavan] (https://www.linkedin.com/in/gaurav-chvan-776354344?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) 
 
 ---
 
