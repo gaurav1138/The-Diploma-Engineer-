@@ -159,3 +159,79 @@ body {
 .info-box a:hover {
   background-color: #097;
 }
+
+
+/*student tool css*/
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f4f4f4;
+}
+
+header {
+  background: #0b5;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.home-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: #0b5;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background: #077;
+}
+
+nav button {
+  background: #0b5;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+nav button.active {
+  background: #044;
+}
+
+section {
+  display: none;
+  background: #fff;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+.tool-box {
+  margin-bottom: 20px;
+}
+
+input, textarea, button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+}
+
+.note, .assignment, .quiz-card {
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+}
