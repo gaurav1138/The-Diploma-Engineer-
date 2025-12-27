@@ -6,67 +6,15 @@
   <title>Student Tools - The Diploma Engineer</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header>
-    <h1>🛠️ Student Tools</h1>
-    <p>Useful calculators, converters and study tools.</p>
-  </header>
 
-  <main>
-    <div id="data-list"></div>
-  </main>
-
-  <footer>
-  <style>
-    /* Fixed Home button styling */
-    .home-btn {
-      position: fixed;
-      top: 5px;
-      right: 5px;
-      padding: 5px 10px;
-      background: #0b5;   /* Green */
-      color: white;
-      font-size: 16px;
-      font-weight:bold;
-      text-decoration: none;
-      border-radius: 25px;
-      transition: 0.3s;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-      z-index: 1000; /* always on top */
-    }
-
-    .home-btn:hover {
-      background: #097;
-      transform: scale(1.05);
-    }
-  </style>
-</head>
-<body>
-  <!-- Fixed Home Button -->
-  <a href="index.html" class="home-btn">🏠 Home</a>
-  <div style="height:1500px;"></div> <!-- Scroll test -->
-
-
-  
-<title>Student Utility Tools</title>
-<style>
-body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f4f4f4; }
-header { background: #0b5; color: white; padding: 20px; text-align: center; }
-nav { display: flex; justify-content: center; background: #077; }
-nav button { background: #0b5; color: white; border: none; padding: 10px 20px; margin: 5px; cursor: pointer; border-radius:5px;}
-nav button.active { background: #044; }
-section { display: none; padding: 20px; max-width: 800px; margin: auto; background:white; margin-top:20px; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.2);}
-input, textarea, button, select { padding: 8px; margin: 5px 0; width: 100%; box-sizing: border-box;}
-.tool-box { margin-bottom:20px; }
-.note, .assignment, .quiz-card { border:1px solid #ccc; padding:10px; margin:5px 0; border-radius:5px; background:#f9f9f9;}
-.highlight { background: yellow; }
-</style>
-</head>
 <body>
 
 <header>
-  <h1>Student Utility Tools</h1>
+  <h1>🛠️ Student Tools</h1>
+  <p>Useful calculators, converters and study tools</p>
 </header>
+
+<a href="index.html" class="home-btn">🏠 Home</a>
 
 <nav>
   <button class="tab-btn active" onclick="showSection('organizer')">Study Organizer</button>
@@ -74,10 +22,10 @@ input, textarea, button, select { padding: 8px; margin: 5px 0; width: 100%; box-
   <button class="tab-btn" onclick="showSection('smartnotes')">Smart Notes</button>
 </nav>
 
-<!-- ===== Study Organizer ===== -->
+<!-- ================= STUDY ORGANIZER ================= -->
 <section id="organizer" style="display:block;">
   <h2>All-in-One Study Organizer</h2>
-  
+
   <div class="tool-box">
     <h3>Add Note</h3>
     <input type="text" id="noteTitle" placeholder="Note Title">
@@ -85,7 +33,7 @@ input, textarea, button, select { padding: 8px; margin: 5px 0; width: 100%; box-
     <button onclick="addNote()">Add Note</button>
     <div id="notesList"></div>
   </div>
-  
+
   <div class="tool-box">
     <h3>Add Assignment</h3>
     <input type="text" id="assignmentTitle" placeholder="Assignment Title">
@@ -95,39 +43,35 @@ input, textarea, button, select { padding: 8px; margin: 5px 0; width: 100%; box-
   </div>
 </section>
 
-<!-- ===== Revision Quiz ===== -->
+<!-- ================= QUIZ ================= -->
 <section id="quiz">
-  <h2>Revision Quiz / Flashcards</h2>
-  
+  <h2>Revision Quiz</h2>
+
   <div class="tool-box">
-    <h3>Add Question</h3>
     <input type="text" id="quizQuestion" placeholder="Question">
     <input type="text" id="quizAnswer" placeholder="Answer">
     <button onclick="addQuiz()">Add Quiz</button>
     <div id="quizList"></div>
   </div>
-  
+
   <div class="tool-box">
-    <h3>Take Quiz</h3>
     <button onclick="startQuiz()">Start Quiz</button>
     <div id="quizPlay"></div>
   </div>
 </section>
 
-<!-- ===== Smart Notes + PDF Extractor ===== -->
+<!-- ================= SMART NOTES ================= -->
 <section id="smartnotes">
   <h2>Smart Notes + PDF Extractor</h2>
-  
+
   <div class="tool-box">
-    <h3>Add Note Manually</h3>
     <input type="text" id="smartNoteTitle" placeholder="Title">
     <textarea id="smartNoteContent" placeholder="Content"></textarea>
     <button onclick="addSmartNote()">Add Note</button>
     <div id="smartNotesList"></div>
   </div>
-  
+
   <div class="tool-box">
-    <h3>Upload PDF (Text Extraction)</h3>
     <input type="file" id="pdfFile" accept=".pdf">
     <button onclick="extractPDF()">Extract Text</button>
     <div id="pdfContent"></div>
@@ -135,155 +79,6 @@ input, textarea, button, select { padding: 8px; margin: 5px 0; width: 100%; box-
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.547/pdf.min.js"></script>
-<script>
-// ===== Tabs =====
-function showSection(id){
-  document.querySelectorAll('section').forEach(sec => sec.style.display='none');
-  document.getElementById(id).style.display='block';
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-}
-
-// ===== Study Organizer =====
-function loadOrganizer(){
-  const notes = JSON.parse(localStorage.getItem('notes')||'[]');
-  const assignments = JSON.parse(localStorage.getItem('assignments')||'[]');
-  document.getElementById('notesList').innerHTML = notes.map((n,i)=>`<div class="note"><b>${n.title}</b><p>${n.content}</p><button onclick="deleteNote(${i})">Delete</button></div>`).join('');
-  document.getElementById('assignmentList').innerHTML = assignments.map((a,i)=>`<div class="assignment"><b>${a.title}</b> - ${a.date}<button onclick="deleteAssignment(${i})">Delete</button></div>`).join('');
-}
-function addNote(){
-  const title=document.getElementById('noteTitle').value;
-  const content=document.getElementById('noteContent').value;
-  if(!title||!content)return alert('Enter both fields');
-  let notes=JSON.parse(localStorage.getItem('notes')||'[]');
-  notes.push({title,content});
-  localStorage.setItem('notes',JSON.stringify(notes));
-  document.getElementById('noteTitle').value='';
-  document.getElementById('noteContent').value='';
-  loadOrganizer();
-}
-function deleteNote(i){
-  let notes=JSON.parse(localStorage.getItem('notes')||'[]');
-  notes.splice(i,1);
-  localStorage.setItem('notes',JSON.stringify(notes));
-  loadOrganizer();
-}
-function addAssignment(){
-  const title=document.getElementById('assignmentTitle').value;
-  const date=document.getElementById('assignmentDate').value;
-  if(!title||!date)return alert('Enter both fields');
-  let assignments=JSON.parse(localStorage.getItem('assignments')||'[]');
-  assignments.push({title,date});
-  localStorage.setItem('assignments',JSON.stringify(assignments));
-  document.getElementById('assignmentTitle').value='';
-  document.getElementById('assignmentDate').value='';
-  loadOrganizer();
-}
-function deleteAssignment(i){
-  let assignments=JSON.parse(localStorage.getItem('assignments')||'[]');
-  assignments.splice(i,1);
-  localStorage.setItem('assignments',JSON.stringify(assignments));
-  loadOrganizer();
-}
-loadOrganizer();
-
-// ===== Quiz Tool =====
-function loadQuizList(){
-  const quizzes = JSON.parse(localStorage.getItem('quizzes')||'[]');
-  document.getElementById('quizList').innerHTML = quizzes.map((q,i)=>`<div class="quiz-card"><b>Q:</b> ${q.question} <br><b>A:</b> ${q.answer}<button onclick="deleteQuiz(${i})">Delete</button></div>`).join('');
-}
-function addQuiz(){
-  const q=document.getElementById('quizQuestion').value;
-  const a=document.getElementById('quizAnswer').value;
-  if(!q||!a)return alert('Enter both fields');
-  let quizzes = JSON.parse(localStorage.getItem('quizzes')||'[]');
-  quizzes.push({question:q,answer:a});
-  localStorage.setItem('quizzes',JSON.stringify(quizzes));
-  document.getElementById('quizQuestion').value='';
-  document.getElementById('quizAnswer').value='';
-  loadQuizList();
-}
-function deleteQuiz(i){
-  let quizzes = JSON.parse(localStorage.getItem('quizzes')||'[]');
-  quizzes.splice(i,1);
-  localStorage.setItem('quizzes',JSON.stringify(quizzes));
-  loadQuizList();
-}
-function startQuiz(){
-  const quizzes = JSON.parse(localStorage.getItem('quizzes')||'[]');
-  if(!quizzes.length) return alert('No quizzes available');
-  let idx=0,score=0;
-  const playDiv=document.getElementById('quizPlay');
-  playDiv.innerHTML='';
-  function nextQuestion(){
-    if(idx>=quizzes.length){
-      playDiv.innerHTML=`<h3>Quiz Finished! Your Score: ${score}/${quizzes.length}</h3>`;
-      return;
-    }
-    const q=quizzes[idx];
-    playDiv.innerHTML=`<div><b>Q${idx+1}:</b> ${q.question}</div>
-    <input id="ansInput" placeholder="Your Answer">
-    <button onclick="checkAnswer()">Submit</button>`;
-  }
-  window.checkAnswer=function(){
-    const userAns=document.getElementById('ansInput').value.trim().toLowerCase();
-    if(userAns===quizzes[idx].answer.trim().toLowerCase())score++;
-    idx++;
-    nextQuestion();
-  }
-  nextQuestion();
-}
-loadQuizList();
-
-// ===== Smart Notes + PDF =====
-function loadSmartNotes(){
-  const snotes = JSON.parse(localStorage.getItem('smartNotes')||'[]');
-  document.getElementById('smartNotesList').innerHTML = snotes.map((n,i)=>`<div class="note"><b>${n.title}</b><p>${n.content}</p><button onclick="deleteSmartNote(${i})">Delete</button></div>`).join('');
-}
-function addSmartNote(){
-  const title=document.getElementById('smartNoteTitle').value;
-  const content=document.getElementById('smartNoteContent').value;
-  if(!title||!content)return alert('Enter both fields');
-  let snotes = JSON.parse(localStorage.getItem('smartNotes')||'[]');
-  snotes.push({title,content});
-  localStorage.setItem('smartNotes',JSON.stringify(snotes));
-  document.getElementById('smartNoteTitle').value='';
-  document.getElementById('smartNoteContent').value='';
-  loadSmartNotes();
-}
-function deleteSmartNote(i){
-  let snotes = JSON.parse(localStorage.getItem('smartNotes')||'[]');
-  snotes.splice(i,1);
-  localStorage.setItem('smartNotes',JSON.stringify(snotes));
-  loadSmartNotes();
-}
-
-// ===== PDF Extraction =====
-function extractPDF(){
-  const file=document.getElementById('pdfFile').files[0];
-  if(!file)return alert('Select a PDF');
-  const fileReader=new FileReader();
-  fileReader.onload=function(){
-    const typedarray=new Uint8Array(this.result);
-    pdfjsLib.getDocument(typedarray).promise.then(pdf=>{
-      let textContent='';
-      let promises=[];
-      for(let i=1;i<=pdf.numPages;i++){
-        promises.push(pdf.getPage(i).then(page=>page.getTextContent().then(tc=>{
-          tc.items.forEach(item=>textContent+=item.str+' ');
-        })));
-      }
-      Promise.all(promises).then(()=>{
-        document.getElementById('pdfContent').innerText=textContent;
-      });
-    });
-  };
-  fileReader.readAsArrayBuffer(file);
-}
-</script>
-
-
-  <script type="module" src="firebase-config.js"></script>
-  <script type="module" src="section.js" data-section="tools"></script>
+<script src="script.js"></script>
 </body>
 </html>
