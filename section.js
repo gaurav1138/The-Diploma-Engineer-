@@ -1,51 +1,133 @@
-import { db } from "./firebase-config.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+// ================= TAB SWITCH =================
+function showSection(id) {
+  document.querySelectorAll("section").forEach(sec => sec.style.display = "none");
+  document.getElementById(id).style.display = "block";
 
-// Page ke data-section attribute se collection ka naam lena
-const section = document.currentScript.getAttribute("data-section");
+  document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+  event.target.classList.add("active");
+}
 
-async function loadData() {
-  const querySnapshot = await getDocs(collection(db, section));
-  let container = document.getElementById("data-list");
-  container.innerHTML = "";
+// ================= NOTES =================
+window.addNote = function () {
+  const title = document.getElementById("noteTitle").value;
+  const content = document.getElementById("noteContent").value;
 
-  querySnapshot.forEach((doc) => {
-    let data = doc.data();
-    container.innerHTML += `
-      <div class="card">
-        <h3>${data.subjectName} (${data.subjectCode})</h3>
-        <p><b>Branch:</b> ${data.branch} | <b>Year:</b> ${data.year} | <b>Sem:</b> ${data.semester}</p>
-        <a href="${data.pdfLink}" target="_blank">📥 Download</a>
+  if (!title || !content) return alert("Fill all fields");
+
+  let notes = JSON.parse(localStorage.getItem("notes") || "[]");
+  notes.push({ title, content });
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  document.getElementById("noteTitle").value = "";
+  document.getElementById("noteContent").value = "";
+  loadNotes();
+};
+
+function loadNotes() {
+  const list = document.getElementById("notesList");
+  const notes = JSON.parse(localStorage.getItem("notes") || "[]");
+
+  list.innerHTML = "";
+  notes.forEach((n, i) => {
+    list.innerHTML += `
+      <div class="note">
+        <b>${n.title}</b>
+        <p>${n.content}</p>
+        <button onclick="deleteNote(${i})">Delete</button>
       </div>
     `;
   });
 }
 
-loadData(); in
+window.deleteNote = function (i) {
+  let notes = JSON.parse(localStorage.getItem("notes"));
+  notes.splice(i, 1);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  loadNotes();
+};
 
+// ================= ASSIGNMENTS =================
+window.addAssignment = function () {
+  const title = document.getElementById("assignmentTitle").value;
+  const date = document.getElementById("assignmentDate").value;
 
+  if (!title || !date) return alert("Fill all fields");
 
-// Function to create PDF boxes dynamically
-function renderPDFBoxes() {
-  const container = document.getElementById('box-container');
-  const pdfDataDiv = document.getElementById('pdf-data');
-  const pdfLines = Array.from(pdfDataDiv.children).map(div => div.textContent.trim());
+  let data = JSON.parse(localStorage.getItem("assignments") || "[]");
+  data.push({ title, date });
+  localStorage.setItem("assignments", JSON.stringify(data));
 
-  pdfLines.forEach(line => {
-    const [branch, subject, semester, code, pdfLink] = line.split("|").map(item => item.trim());
+  document.getElementById("assignmentTitle").value = "";
+  document.getElementById("assignmentDate").value = "";
 
-    const box = document.createElement('div');
-    box.classList.add('info-box');
+  loadAssignments();
+};
 
-    box.innerHTML = `
-      <p><strong>${subject}</strong></p>
-      <p>${branch} | ${semester} | ${code}</p>
-      <a href="${pdfLink}" target="_blank">Open PDF</a>
+function loadAssignments() {
+  const box = document.getElementById("assignmentList");
+  const data = JSON.parse(localStorage.getItem("assignments") || "[]");
+
+  box.innerHTML = "";
+  data.forEach((a, i) => {
+    box.innerHTML += `
+      <div class="assignment">
+        <b>${a.title}</b> - ${a.date}
+        <button onclick="deleteAssignment(${i})">Delete</button>
+      </div>
     `;
-
-    container.appendChild(box);
   });
 }
 
-// Call the function
-renderPDFBoxes();
+window.deleteAssignment = function (i) {
+  let data = JSON.parse(localStorage.getItem("assignments"));
+  data.splice(i, 1);
+  localStorage.setItem("assignments", JSON.stringify(data));
+  loadAssignments();
+};
+
+// ================= QUIZ =================
+window.addQuiz = function () {
+  const q = document.getElementById("quizQuestion").value;
+  const a = document.getElementById("quizAnswer").value;
+
+  if (!q || !a) return alert("Fill both fields");
+
+  let quiz = JSON.parse(localStorage.getItem("quiz") || "[]");
+  quiz.push({ q, a });
+  localStorage.setItem("quiz", JSON.stringify(quiz));
+
+  document.getElementById("quizQuestion").value = "";
+  document.getElementById("quizAnswer").value = "";
+
+  loadQuiz();
+};
+
+function loadQuiz() {
+  const box = document.getElementById("quizList");
+  const quiz = JSON.parse(localStorage.getItem("quiz") || "[]");
+
+  box.innerHTML = "";
+  quiz.forEach((q, i) => {
+    box.innerHTML += `
+      <div class="quiz-card">
+        <b>Q:</b> ${q.q}<br>
+        <b>A:</b> ${q.a}
+        <button onclick="deleteQuiz(${i})">Delete</button>
+      </div>
+    `;
+  });
+}
+
+window.deleteQuiz = function (i) {
+  let quiz = JSON.parse(localStorage.getItem("quiz"));
+  quiz.splice(i, 1);
+  localStorage.setItem("quiz", JSON.stringify(quiz));
+  loadQuiz();
+};
+
+// ================= PAGE LOAD =================
+window.onload = function () {
+  loadNotes();
+  loadAssignments();
+  loadQuiz();
+};
