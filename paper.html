@@ -6,6 +6,15 @@
 
   <!-- SEO -->
   <title>The Diploma Engineer - Notes</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZEMJZLVCET"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-ZEMJZLVCET');
+</script>
   <meta name="description" content="Download Diploma Engineering Notes, Question Papers, Practical Files and Study Material for all branches.">
   <meta name="keywords" content="Diploma Notes, Polytechnic Notes, Engineering Notes, Diploma Question Papers, The Diploma Engineer">
   <meta name="author" content="The Diploma Engineer">
@@ -108,30 +117,3 @@ fetch("https://opensheet.elk.sh/1ycSeifat4gusNf3hTFDDz5HFFlnhWdAJWXNyuV8s9nQ/She
 </html> 
 </header>
 
-<div class="container" id="data"></div>
-
-<!-- Home Button -->
-<a href="index.html" class="home-btn">🏠</a>
-
-<script>
-fetch("https://opensheet.elk.sh/1ycSeifat4gusNf3hTFDDz5HFFlnhWdAJWXNyuV8s9nQ/Sheet1")
-.then(res => res.json())
-.then(data => {
-  let output = "";
-  data.forEach(item => {
-    output += `
-      <div class="card">
-        <h3><b>subject:</b> ${item.Subject}</h3>
-        <p><b>Title:</b> ${item.Title}</p>
-        <p><b>Branch:</b> ${item.Branch}</p>
-        <p><b>Semester:</b> ${item.Semester}</p>
-        <a class="btn" href="${item.PDF_Link}" target="_blank">📄 Open PDF</a>
-      </div>
-    `;
-  });
-  document.getElementById("data").innerHTML = output;
-});
-</script>
-
-</body>
-</html>
