@@ -87,16 +87,37 @@
 
   </div>
 
-  <main>
-    <h2>Explore Our Sections</h2>
-    <nav class="nav-links">
-      <a href="notes.html">📝 Notes</a> <hr/>
-      <a href="manual.html">📘 Practical Manuals</a> <hr/>
-      <a href="paper.html">📄 Question Papers</a><hr/>
-      <a href="tool.html">🛠️ Student Tools</a> <hr/>
-      <a href="notebook.html">📔 Notebooks</a> <hr/>
-    </nav>
-  </main>
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <h3>The Diploma Engineer</h3>
+</div>
+
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✖</span>
+  <h2>📘 The Diploma Engineer</h2>
+
+  <a href="index.html">🏠 Home</a>
+  <a href="notes.html">📘 Notes</a>
+  <a href="paper.html">📄 Question Papers</a>
+  <a href="manual.html">🔧 Practical Manuals</a>
+  <a href="notebook.html">📓 Notebooks</a>
+  <a href="tool.html">🧮 Student Tools</a>
+</div>
+
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<script>
+function openMenu(){
+  document.getElementById("sidebar").classList.add("active");
+  document.getElementById("overlay").classList.add("active");
+}
+function closeMenu(){
+  document.getElementById("sidebar").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
+}
 
   <footer>
     <p>© 2025 The Diploma Engineer | Made for Diploma Students <br/>
