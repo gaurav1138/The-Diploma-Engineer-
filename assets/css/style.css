@@ -1,0 +1,306 @@
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== ROOT COLORS ===== */
+:root {
+  --primary: #0d6efd;
+  --dark: #020617;
+  --light: #f8fafc;
+  --gray: #64748b;
+  --accent: #22c55e;
+}
+
+/* ===== BODY ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--light);
+  color: var(--dark);
+  line-height: 1.7;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* ===== HEADER ===== */
+header {
+  background: var(--dark);
+  color: #fff;
+  padding: 15px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: #cbd5f5;
+  text-decoration: none;
+  margin-left: 20px;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  padding: 80px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #0d6efd, #2563eb);
+  color: white;
+}
+
+.hero h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  opacity: 0.95;
+}
+
+/* ===== COMMON CARD ===== */
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin-bottom: 30px;
+}
+
+.card h2 {
+  margin-bottom: 10px;
+  color: var(--primary);
+}
+
+/* ===== BUTTON ===== */
+.btn {
+  display: inline-block;
+  padding: 10px 22px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn:hover {
+  background: #084298;
+}
+
+/* ===== BLOG GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--dark);
+  color: #94a3b8;
+  padding: 40px 20px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 26px;
+  }
+}
+
+
+
+/*Top bar css*/
+/*more menu css*/
+/* ===== BASIC ===== */
+body{
+  margin:0;
+  font-family:Segoe UI, Arial, sans-serif;
+  background:#f1f5f9;
+}
+
+/* ===== TOP BAR ===== */
+.topbar{
+  background:#020617;
+  color:#fff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+.menu-btn{
+  font-size:26px;
+  cursor:pointer;
+}
+.logo{
+  font-weight:600;
+  font-size:16px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position:fixed;
+  top:0;
+  left:-280px;
+  width:260px;
+  height:100%;
+  background:#020617;
+  color:#e5e7eb;
+  padding:20px;
+  transition:left 0.3s ease;
+  z-index:9999;
+}
+.sidebar h2{
+  margin-top:0;
+  font-size:18px;
+  margin-bottom:20px;
+}
+.sidebar a{
+  display:block;
+  color:#cbd5f5;
+  text-decoration:none;
+  padding:10px 0;
+  font-size:15px;
+}
+.sidebar a:hover{
+  color:#22c55e;
+}
+
+/* CLOSE BUTTON */
+.close-btn{
+  position:absolute;
+  right:15px;
+  top:15px;
+  font-size:22px;
+  cursor:pointer;
+}
+
+/* ===== OVERLAY ===== */
+#overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  z-index:9998;
+}
+
+/* ===== PAGE CONTENT (DEMO) ===== */
+.content{
+  padding:20px;
+}
+
+
+/* ===============================
+   PORTFOLIO PROFILE PHOTO (PRO)
+   =============================== */
+
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-photo {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  object-fit: cover;
+
+  /* Premium professional look */
+  border: 5px solid #ffffff;
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.15),
+    0 0 0 4px #0d6efd;
+
+  margin-bottom: 18px;
+  background: #f8fafc;
+
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Subtle hover animation */
+.profile-photo:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 0 0 4px #2563eb;
+}
+
+.profile-wrapper h2 {
+  margin-top: 5px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* Mobile responsive */
+@media (max-width: 600px) {
+  .profile-photo {
+    width: 140px;
+    height: 140px;
+  }
+}
+
+/*UNIVERSAL FOOTER */
+
+.site-footer{
+  background:#020617;
+  color:#cbd5f5;
+  margin-top:80px;
+  font-size:14px;
+}
+.footer-container{
+  max-width:1100px;
+  margin:auto;
+  padding:45px 20px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+}
+.footer-container h4{
+  color:#22c55e;
+  margin-bottom:12px;
+}
+.footer-container a{
+  color:#94a3b8;
+  text-decoration:none;
+  display:block;
+  margin:6px 0;
+}
+.footer-container a:hover{
+  color:#22c55e;
+}
+.footer-bottom{
+  text-align:center;
+  padding:18px;
+  border-top:1px solid rgba(255,255,255,0.08);
+  font-size:13px;
+  color:#94a3b8;
+}
