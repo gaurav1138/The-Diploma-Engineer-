@@ -2,96 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Portfolio | The Diploma Engineer</title>
+  <title>Portfolio | The Diploma Engineer</title>
 
   <!-- SEO -->
-  <meta name="description" content="Gaurav Chavan portfolio – Diploma IT student, web developer, blogger and AI tools learner.">
-  <meta name="keywords" content="Diploma IT Portfolio, Student Portfolio Website, Web Developer Student">
+  <meta name="description" content="Portfolio of Gaurav Chavan – student-friendly websites, tools and blogs for diploma students.">
+  <meta name="keywords" content="Portfolio Website, Student Portfolio, Web Developer Portfolio">
   <meta name="author" content="Gaurav Chavan">
   <meta name="robots" content="index, follow">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- ===== EXTRA CSS (PHOTO SECTION) ===== -->
+  <style>
+    .profile-card{
+      display:flex;
+      gap:30px;
+      align-items:center;
+      background:#fff;
+      padding:30px;
+      border-radius:12px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.08);
+    }
+    .profile-img img{
+      width:160px;
+      height:160px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #22c55e;
+    }
+    .profile-info h2{
+      margin:0;
+      font-size:26px;
+    }
+    .profile-info .title{
+      color:#64748b;
+      margin:6px 0 12px;
+      font-weight:500;
+    }
+    @media(max-width:768px){
+      .profile-card{
+        flex-direction:column;
+        text-align:center;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  
-  <!-- ===== TOP BAR ===== -->
+
+<!-- ================= TOP BAR ================= -->
 <div class="topbar">
   <span class="menu-btn" onclick="openMenu()">☰</span>
   <span class="logo">The Diploma Engineer</span>
 </div>
 
-<!-- ===== SIDEBAR ===== -->
+<!-- ================= SIDEBAR ================= -->
 <div id="sidebar" class="sidebar">
   <span class="close-btn" onclick="closeMenu()">✕</span>
 
-  <h2>The Diploma Engineer</h2>
-
+  <h2>Menu</h2>
   <a href="index.html">Home</a>
   <a href="about.html">About</a>
   <a href="portfolio.html">Portfolio</a>
-  <a href="tool.html">Tools</a>
-  <a href="blog.html">Blog</a>
+  <a href="notes.html">📘 Notes</a>
+  <a href="tool/tool.html">🧰 Useful Tools</a>
+  <a href="blog/blog.html">📝 Blog List</a>
   <a href="services.html">Services</a>
   <a href="contact.html">Contact</a>
 </div>
 
-<!-- ===== OVERLAY ===== -->
 <div id="overlay" onclick="closeMenu()"></div>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
   <h1>My Portfolio</h1>
-  <p>Diploma IT Student • Web Developer • Blogger</p>
+  <p>Student-focused websites, tools & digital solutions</p>
 </section>
 
-<!-- ================= PROFILE ================= -->
+<!-- ================= PROFILE (PHOTO) ================= -->
 <section class="container">
-  <div class="card profile-wrapper">
+  <div class="profile-card">
 
-    <img src="assets/images/IMG_20251228_132448.jpg"
-         alt="Gaurav Chavan Portfolio Photo"
-         class="profile-photo">
+    <div class="profile-img">
+      <img src="/assets/ images/IMG_20251229_141239.jpg" alt="Gaurav Chavan">
+    </div>
 
-    <h2>Gaurav Chavan</h2>
+    <div class="profile-info">
+      <h2>Gaurav Chavan</h2>
+      <p class="title"> Engineering Student & Web Creator</p>
 
-    <ul style="list-style:disc; text-align:left; max-width:600px; margin:15px auto;">
-      <li>Diploma IT student with strong interest in web development</li>
-      <li>Focused on clean UI, usability and SEO-ready structure</li>
-      <li>Experience in blog websites, tools pages and portfolios</li>
-      <li>Student-friendly, practical and affordable approach</li>
-    </ul>
+      <p>
+        Creator of <b>The Diploma Engineer</b>.  
+        I build student-friendly websites, blogs and online tools
+        that help learners grow digitally.
+      </p>
 
-    <a href="contact.html" class="btn">Hire Me</a>
-  </div>
-</section>
+      <a href="contact.html" class="btn">Contact Me</a>
+    </div>
 
-<!-- ================= ABOUT ME ================= -->
-<section class="container">
-  <div class="card">
-    <h2>About Me</h2>
-    <ul>
-      <li>Pursuing Diploma in Information Technology</li>
-      <li>Strong foundation in HTML, CSS and basic JavaScript</li>
-      <li>Built multiple websites using GitHub Pages</li>
-      <li>Interest in AI tools, blogging and online earning</li>
-      <li>Continuous learner through real-world projects</li>
-    </ul>
   </div>
 </section>
 
 <!-- ================= SKILLS ================= -->
 <section class="container">
-  <div class="card">
-    <h2>Technical Skills</h2>
-    <ul>
-      <li>HTML5 – semantic & SEO-friendly structure</li>
-      <li>CSS3 – responsive layouts & modern UI</li>
-      <li>JavaScript – calculators, sidebar & interactivity</li>
-      <li>SEO Basics – meta tags, sitemap & indexing</li>
-      <li>AI Tools – content writing & productivity</li>
-    </ul>
+  <div class="grid">
+
+    <div class="card">
+      <h2>Technical Skills</h2>
+      <ul>
+        <li>HTML5, CSS3</li>
+        <li>JavaScript (Basic)</li>
+        <li>Responsive Web Design</li>
+        <li>SEO Basics</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2>Tools & Platforms</h2>
+      <ul>
+        <li>GitHub Pages</li>
+        <li>VS Code</li>
+        <li>Google Search Console</li>
+        <li>AI Tools</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
@@ -100,73 +136,34 @@
   <div class="card">
     <h2>Projects</h2>
     <ul>
-      <li><b>The Diploma Engineer:</b> Educational blog + tools website</li>
-      <li><b>Portfolio Websites:</b> Personal portfolios for students</li>
-      <li><b>Blog Websites:</b> SEO-friendly blog structures</li>
-      <li><b>Tools Pages:</b> SIP, EMI & percentage calculators</li>
+      <li><b>The Diploma Engineer Website</b> – Blogs, notes & tools</li>
+      <li><b>Online Calculators</b> – SIP, EMI, Percentage tools</li>
+      <li><b>Student Portfolio Websites</b></li>
     </ul>
   </div>
 </section>
 
-<!-- ================= EXPERIENCE ================= -->
-<section class="container">
-  <div class="card">
-    <h2>Experience</h2>
-    <ul>
-      <li>Personal & academic web development projects</li>
-      <li>Website structure planning & layout design</li>
-      <li>Blog content creation & service pages</li>
-      <li>Basic SEO implementation</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ================= WHY HIRE ME ================= -->
-<section class="container">
-  <div class="card">
-    <h2>Why Hire Me?</h2>
-    <ul>
-      <li>Student-friendly pricing</li>
-      <li>Clean, modern & responsive design</li>
-      <li>SEO-ready structure</li>
-      <li>Clear communication & support</li>
-      <li>Focused on long-term growth</li>
-    </ul>
-  </div>
-</section>
-
-<!-- ===== UNIVERSAL SERVICES CTA ===== -->
+<!-- ================= MY SERVICES ================= -->
 <section class="container">
   <div class="card" style="text-align:center;">
     <h2>My Services</h2>
-    <p>
-      Portfolio website, blog website, tools pages aur
-      student-friendly digital services available.
-    </p>
+    <p>Affordable & student-friendly digital services</p>
 
-    <ul style="list-style:none;padding:0;margin:20px 0;">
-      <li>✔ Portfolio Website for Students</li>
+    <ul style="list-style:none;padding:0;">
+      <li>✔ Portfolio Website Development</li>
       <li>✔ Blog & Content Websites</li>
       <li>✔ Website Redesign</li>
       <li>✔ Basic SEO Setup</li>
-      <li>✔ Tools Pages (SIP, EMI, Calculators)</li>
+      <li>✔ Online Tools & Calculators</li>
     </ul>
 
-    <a href="services.html" class="btn">View All Services</a>
-    &nbsp;&nbsp;
+    <a href="services.html" class="btn">View Services</a>
+    &nbsp;
     <a href="contact.html" class="btn">Contact Me</a>
   </div>
 </section>
 
-<!-- ================= CTA ================= -->
-<section class="container">
-  <div class="card" style="text-align:center;">
-    <h2>Let’s Work Together</h2>
-    <p>Portfolio, blog ya website chahiye? Contact karo.</p>
-    <a href="contact.html" class="btn">Contact Me</a>
-  </div>
-</section>
-
+<!-- ===== FOOTER (AS REQUESTED) ===== -->
 <footer class="site-footer">
 
   <div class="footer-container">
@@ -174,27 +171,39 @@
     <div>
       <h4>The Diploma Engineer</h4>
       <p>
-        Diploma students ke liye AI blogs, online tools,
-        portfolio guidance aur career-focused learning platform.
+        Diploma students ke liye blogs, online tools,
+        portfolio guidance aur student-friendly services.
       </p>
+    </div>
+
+    <div>
+      <h4>Blogs</h4>
+      <a href="blog/blog.html">All Blogs</a>
+      <a href="blog/blog-1.html">AI Se Paise Kaise Kamaye</a>
+      <a href="blog/blog-2.html">Top AI Tools for Students</a>
+      <a href="blog/blog-3.html">Portfolio Website Guide</a>
+      <a href="blog/blog-4.html">Freelancing Start Guide</a>
+      <a href="blog/blog-5.html">SEO Basics</a>
+      <a href="blog/blog-6.html">Online Earning Ideas</a>
+    </div>
+
+    <div>
+      <h4>Tools</h4>
+      <a href="tool/tool.html">All Tools</a>
+      <a href="tool/sip-calculator.html">SIP Calculator</a>
+      <a href="tool/emi-calculator.html">EMI Calculator</a>
+      <a href="tool/percentage-calculator.html">Percentage Calculator</a>
+      <a href="tool/cgpa-calculator.html">CGPA to Percentage</a>
+      <a href="tool/simple-interest.html">Simple Interest</a>
+      <a href="tool/compound-interest.html">Compound Interest</a>
     </div>
 
     <div>
       <h4>Quick Links</h4>
       <a href="index.html">Home</a>
-      <a href="about.html">About</a>
+      <a href="notes.html">Notes</a>
       <a href="portfolio.html">Portfolio</a>
-      <a href="tool.html">Tools</a>
-    </div>
-
-    <div>
-      <h4>Learning</h4>
-      <a href="blog.html">Blogs</a>
       <a href="services.html">Services</a>
-    </div>
-
-    <div>
-      <h4>Support</h4>
       <a href="contact.html">Contact</a>
     </div>
 
@@ -206,6 +215,17 @@
 
 </footer>
 
-<script src="assets/js/main.js"></script>
+<!-- ================= JS ================= -->
+<script>
+function openMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+function closeMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
 </body>
 </html>
