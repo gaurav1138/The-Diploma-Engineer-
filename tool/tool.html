@@ -2,105 +2,191 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Blogs | The Diploma Engineer</title>
+  <title>Useful Tools | The Diploma Engineer</title>
 
   <!-- SEO -->
-  <meta name="description" content="AI, freelancing, career and website development blogs for diploma students and beginners.">
-  <meta name="keywords" content="AI Blogs, Diploma Student Blog, Freelancing Blog, Web Development Blog">
+  <meta name="description" content="Useful online calculators and tools for students including SIP, EMI, Percentage, CGPA and interest calculators.">
+  <meta name="keywords" content="Student Tools, Online Calculators, SIP EMI Calculator">
   <meta name="author" content="Gaurav Chavan">
   <meta name="robots" content="index, follow">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
 
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <span class="logo">The Diploma Engineer</span>
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✕</span>
+
+  <h2>Menu</h2>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About</a>
+  <a href="../portfolio.html">Portfolio</a>
+  <a href="../notes.html">📘 Notes</a>
+  <a href="tool.html">🧰 Useful Tools</a>
+  <a href="../blog/blog.html">📝 Blog List</a>
+  <a href="../services.html">Services</a>
+  <a href="../contact.html">Contact</a>
+</div>
+
+<div id="overlay" onclick="closeMenu()"></div>
+
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <h1>Blogs & Learning</h1>
-  <p>AI • Career • Freelancing • Website Guides for Students</p>
+  <h1>Useful Tools</h1>
+  <p>Free online calculators & utilities for students</p>
 </section>
 
-<!-- ================= INTRO ================= -->
-<section class="container">
-  <div class="card">
-    <h2>Latest Blogs</h2>
-    <p>
-      Is section me diploma students aur beginners ke liye
-      AI tools, online earning, freelancing aur
-      website development se related practical blogs milenge.
-    </p>
-  </div>
-</section>
-
-<!-- ================= BLOG LIST ================= -->
+<!-- ================= TOOLS LIST ================= -->
 <section class="container">
   <div class="grid">
 
-    <!-- BLOG 1 -->
     <div class="card">
-      <h2>AI Se Paise Kaise Kamaye?</h2>
-      <p>Beginners ke liye AI tools use karke online earning ka roadmap.</p>
-      <p><b>Category:</b> AI & Online Earning</p>
-      <a href="blog/blog-1.html" class="btn">Read Blog</a>
+      <h2>SIP Calculator</h2>
+      <p>Monthly investment ka future value calculate kare.</p>
+      <a href="sip-calculator.html" class="btn">Open Tool</a>
     </div>
 
-    <!-- BLOG 2 -->
     <div class="card">
-      <h2>Diploma Students Ke Liye Top AI Tools</h2>
-      <p>College ke sath AI tools use karke skills aur earning ka guide.</p>
-      <p><b>Category:</b> AI Tools</p>
-      <a href="blog/blog-2.html" class="btn">Read Blog</a>
+      <h2>EMI Calculator</h2>
+      <p>Loan EMI, interest aur total payment calculate kare.</p>
+      <a href="emi-calculator.html" class="btn">Open Tool</a>
     </div>
 
-    <!-- BLOG 3 -->
     <div class="card">
-      <h2>Portfolio Website Kaise Banaye</h2>
-      <p>Students aur freshers ke liye professional portfolio guide.</p>
-      <p><b>Category:</b> Web Development</p>
-      <a href="blog/blog-3.html" class="btn">Read Blog</a>
+      <h2>Percentage Calculator</h2>
+      <p>Marks se percentage easily calculate kare.</p>
+      <a href="percentage-calculator.html" class="btn">Open Tool</a>
     </div>
 
-    <!-- BLOG 4 -->
     <div class="card">
-      <h2>Freelancing Start Kaise Kare</h2>
-      <p>Zero experience se freelancing shuru karne ka step-by-step plan.</p>
-      <p><b>Category:</b> Freelancing</p>
-      <a href="blog/blog-4.html" class="btn">Read Blog</a>
+      <h2>CGPA to Percentage</h2>
+      <p>CGPA ko percentage me convert kare.</p>
+      <a href="cgpa-calculator.html" class="btn">Open Tool</a>
     </div>
 
-    <!-- BLOG 5 -->
     <div class="card">
-      <h2>SEO Basics for Beginners</h2>
-      <p>Google ranking ke liye SEO ka simple aur practical guide.</p>
-      <p><b>Category:</b> SEO</p>
-      <a href="blog/blog-5.html" class="btn">Read Blog</a>
+      <h2>Simple Interest Calculator</h2>
+      <p>Simple interest calculate karne ka tool.</p>
+      <a href="simple-interest.html" class="btn">Open Tool</a>
     </div>
 
-    <!-- BLOG 6 -->
     <div class="card">
-      <h2>Students Ke Liye Online Earning Ideas</h2>
-      <p>College ke sath online earning karne ke best options.</p>
-      <p><b>Category:</b> Career & Earning</p>
-      <a href="blog/blog-6.html" class="btn">Read Blog</a>
+      <h2>Compound Interest Calculator</h2>
+      <p>Long-term savings ke liye compound interest calculate kare.</p>
+      <a href="compound-interest.html" class="btn">Open Tool</a>
     </div>
 
   </div>
 </section>
 
-<!-- ================= CTA ================= -->
+<!-- ================= NOTE ================= -->
+<section class="container">
+  <div class="card">
+    <h2>Note</h2>
+    <p>
+      Ye tools educational purpose ke liye hain.
+      Actual financial decisions lene se pehle expert se salah le.
+    </p>
+  </div>
+</section>
+
+<!-- ================= MY SERVICES ================= -->
 <section class="container">
   <div class="card" style="text-align:center;">
-    <h2>Want More Blogs?</h2>
-    <p>
-      Regular AI, career aur website related blogs ke liye
-      website visit karte raho.
-    </p>
-    <a href="contact.html" class="btn">Contact Me</a>
+    <h2>My Services</h2>
+    <p>Student-friendly digital services & tools available</p>
+
+    <ul style="list-style:none;padding:0;">
+      <li>✔ Portfolio Website for Students</li>
+      <li>✔ Blog & Content Websites</li>
+      <li>✔ Website Redesign</li>
+      <li>✔ Basic SEO Setup</li>
+      <li>✔ Online Tools & Calculators</li>
+    </ul>
+
+    <a href="../services.html" class="btn">View Services</a>
+    &nbsp;
+    <a href="../contact.html" class="btn">Contact Me</a>
   </div>
 </section>
 
-<script src="assets/js/main.js"></script>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div>
+      <h4>The Diploma Engineer</h4>
+      <p>
+        Diploma students ke liye blogs, online tools,
+        portfolio guidance aur student-friendly services.
+      </p>
+    </div>
+
+    <!-- BLOG LIST -->
+    <div>
+      <h4>Blogs</h4>
+      <a href="../blog/blog.html">All Blogs</a>
+      <a href="../blog/blog-1.html">AI Se Paise Kaise Kamaye</a>
+      <a href="../blog/blog-2.html">Top AI Tools for Students</a>
+      <a href="../blog/blog-3.html">Portfolio Website Guide</a>
+      <a href="../blog/blog-4.html">Freelancing Start Guide</a>
+      <a href="../blog/blog-5.html">SEO Basics</a>
+      <a href="../blog/blog-6.html">Online Earning Ideas</a>
+    </div>
+
+    <!-- TOOLS LIST -->
+    <div>
+      <h4>Tools</h4>
+      <a href="../tool/tool.html">All Tools</a>
+      <a href="../tool/sip-calculator.html">SIP Calculator</a>
+      <a href="../tool/emi-calculator.html">EMI Calculator</a>
+      <a href="../tool/percentage-calculator.html">Percentage Calculator</a>
+      <a href="../tool/cgpa-calculator.html">CGPA to Percentage</a>
+      <a href="../tool/simple-interest.html">Simple Interest</a>
+      <a href="../tool/compound-interest.html">Compound Interest</a>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div>
+      <h4>Quick Links</h4>
+      <a href="../index.html">Home</a>
+      <a href="../notes.html">Notes</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 <strong>The Diploma Engineer</strong> · All Rights Reserved
+  </div>
+
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+function openMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+function closeMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
 </body>
 </html>
