@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SIP Calculator | The Diploma Engineer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SIP Calculator with invested amount, returns and maturity value breakup.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <span class="logo">The Diploma Engineer</span>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✕</span>
+  <h2>Tools</h2>
+  <a href="../index.html">🏠Home</a>
+  <a href="../notes.html">📔Notes</a>
+  <a href="tool.html">🧰⚒️Useful Tools</a>
+  <a href="../blog/blog.html">Blog List</a>
+  <a href="../services.html">Services</a>
+  <a href="../contact.html">Contact</a>
+</div>
+<div id="overlay" onclick="closeMenu()"></div>
+
+<section class="hero">
+  <h1>SIP Calculator</h1>
+  <p>Calculate monthly SIP returns with full breakup</p>
+</section>
+
+<section class="container">
+  <div class="card">
+    <h2>Calculate SIP</h2>
+    <input type="number" id="sipAmount" placeholder="Monthly Investment (₹)"><br><br>
+    <input type="number" id="sipRate" placeholder="Expected Annual Return (%)"><br><br>
+    <input type="number" id="sipYears" placeholder="Investment Duration (Years)"><br><br>
+    <button class="btn" onclick="calculateSIP()">Calculate</button>
+    <p id="sipResult" style="margin-top:15px;font-weight:600;"></p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="card">
+    <h2>What is SIP?</h2>
+    <p>SIP (Systematic Investment Plan) me aap har month fixed amount invest karte ho. Long-term wealth creation ke liye best mana jata hai.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="card" style="text-align:center;">
+    <h2>My Services</h2>
+    <ul style="list-style:none;padding:0;">
+      <li>✔ Portfolio Websites</li>
+      <li>✔ Blog Websites</li>
+      <li>✔ Website Redesign</li>
+      <li>✔ Basic SEO</li>
+      <li>✔ Online Tools</li>
+    </ul>
+    <a href="../services.html" class="btn">View Services</a>
+    <a href="../contact.html" class="btn">Contact Me</a>
+  </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div>
+      <h4>The Diploma Engineer</h4>
+      <p>
+        Diploma students ke liye blogs, online tools,
+        portfolio guidance aur student-friendly services.
+      </p>
+    </div>
+
+    <!-- BLOG LIST -->
+    <div>
+      <h4>Blogs</h4>
+      <a href="../blog/blog.html">All Blogs</a>
+      <a href="../blog/blog-1.html">AI Se Paise Kaise Kamaye</a>
+      <a href="../blog/blog-2.html">Top AI Tools for Students</a>
+      <a href="../blog/blog-3.html">Portfolio Website Guide</a>
+      <a href="../blog/blog-4.html">Freelancing Start Guide</a>
+      <a href="../blog/blog-5.html">SEO Basics</a>
+      <a href="../blog/blog-6.html">Online Earning Ideas</a>
+    </div>
+
+    <!-- TOOLS LIST -->
+    <div>
+      <h4>Tools</h4>
+      <a href="../tool/tool.html">All Tools</a>
+      <a href="../tool/sip-calculator.html">SIP Calculator</a>
+      <a href="../tool/emi-calculator.html">EMI Calculator</a>
+      <a href="../tool/percentage-calculator.html">Percentage Calculator</a>
+      <a href="../tool/cgpa-calculator.html">CGPA to Percentage</a>
+      <a href="../tool/simple-interest.html">Simple Interest</a>
+      <a href="../tool/compound-interest.html">Compound Interest</a>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div>
+      <h4>Quick Links</h4>
+      <a href="../index.html">Home</a>
+      <a href="../notes.html">Notes</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 <strong>The Diploma Engineer</strong> · All Rights Reserved
+  </div>
+
+</footer>
+
+<script>
+function calculateSIP(){
+  const p = parseFloat(sipAmount.value);
+  const r = parseFloat(sipRate.value)/100/12;
+  const n = parseFloat(sipYears.value)*12;
+  if(isNaN(p)||isNaN(r)||isNaN(n)){ sipResult.innerText="Enter valid values."; return;}
+  const fv = p*((Math.pow(1+r,n)-1)/r)*(1+r);
+  const invested = p*n;
+  const profit = fv - invested;
+  sipResult.innerHTML = `
+    <b>Total Invested:</b> ₹${Math.round(invested)}<br>
+    <b>Total Returns:</b> ₹${Math.round(profit)}<br>
+    <b>Maturity Value:</b> ₹${Math.round(fv)}
+  `;
+}
+function openMenu(){ sidebar.style.left="0"; overlay.style.display="block"; }
+function closeMenu(){ sidebar.style.left="-260px"; overlay.style.display="none"; }
+</script>
+</body>
+</html>
