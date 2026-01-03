@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block unnecessary folders (optional – agar exist karti ho)
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://gaurav1138.github.io/The-Diploma-Engineer-/sitemap.xml
