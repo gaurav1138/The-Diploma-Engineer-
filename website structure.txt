@@ -1,0 +1,53 @@
+The-Diploma-Engineer/
+│
+├── index.html                (Home page)
+├── about.html                (About page)
+├── portfolio.html            (Portfolio)
+├── services.html             (Services)
+├── contact.html              (Contact + WhatsApp + Pricing)
+├── notes.html                (Notes list page)
+│
+├── sitemap.xml               (SEO sitemap)
+├── robots.txt                (SEO robots file)
+├── README.md                 (Project info)
+│
+├── assets/
+│   ├── css/
+│   │   └── style.css         (Common CSS – all pages)
+│   │
+│   ├── js/
+│   │   └── main.js           (Optional common JS – menu etc.)
+│   │
+│   └── images/
+│       ├── profile.jpg
+│       ├── cover.jpg
+│       ├── ai-content-writing.jpg
+│       ├── ai-graphic-design.jpg
+│       ├── ai-video-reels.jpg
+│       ├── ai-affiliate-marketing.jpg
+│       ├── ai-chatbot-service.jpg
+│       ├── ai-resume-ppt.jpg
+│       └── ai-freelancing.jpg
+│
+├── blog/
+│   ├── blog.html             (Blog list)
+│   ├── blog-1.html           (AI se paise kaise kamaye)
+│   ├── blog-2.html
+│   ├── blog-3.html
+│   ├── blog-4.html
+│   ├── blog-5.html
+│   └── blog-6.html
+│
+├── tool/
+│   ├── tool.html             (Tool list page)
+│   ├── sip-calculator.html
+│   ├── emi-calculator.html
+│   ├── percentage-calculator.html
+│   ├── cgpa-calculator.html
+│   ├── simple-interest.html
+│   └── compound-interest.html
+│
+└── notes/
+    ├── notes.html            (Optional – agar notes folder use karo)
+    ├── it-notes.html
+    └── mech-notes.html
