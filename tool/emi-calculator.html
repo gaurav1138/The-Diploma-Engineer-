@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EMI Calculator | The Diploma Engineer</title>
+
+  <!-- SEO -->
+  <meta name="description" content="EMI Calculator to calculate monthly EMI, total interest and total payable amount with clear breakup.">
+  <meta name="keywords" content="EMI Calculator, Loan EMI, Interest Calculator">
+  <meta name="author" content="Gaurav Chavan">
+  <meta name="robots" content="index, follow">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <span class="logo">The Diploma Engineer</span>
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✕</span>
+
+  <h2>Menu</h2>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About</a>
+  <a href="../portfolio.html">Portfolio</a>
+  <a href="../notes.html">📘 Notes</a>
+  <a href="tool.html">🧰 Useful Tools</a>
+  <a href="../blog/blog.html">📝 Blog List</a>
+  <a href="../services.html">Services</a>
+  <a href="../contact.html">Contact</a>
+</div>
+
+<div id="overlay" onclick="closeMenu()"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>EMI Calculator</h1>
+  <p>Calculate your loan EMI with full payment breakup</p>
+</section>
+
+<!-- ================= EMI CALCULATOR ================= -->
+<section class="container">
+  <div class="card">
+
+    <h2>Calculate EMI</h2>
+
+    <input type="number" id="loanAmount" placeholder="Loan Amount (₹)">
+    <br><br>
+
+    <input type="number" id="interestRate" placeholder="Annual Interest Rate (%)">
+    <br><br>
+
+    <input type="number" id="loanYears" placeholder="Loan Duration (Years)">
+    <br><br>
+
+    <button class="btn" onclick="calculateEMI()">Calculate</button>
+
+    <p id="emiResult" style="margin-top:15px;font-weight:600;"></p>
+  </div>
+</section>
+
+<!-- ================= EMI INFORMATION ================= -->
+<section class="container">
+  <div class="card">
+    <h2>What is EMI?</h2>
+    <p>
+      EMI (Equated Monthly Installment) wo fixed amount hota hai
+      jo borrower har month loan repay karne ke liye pay karta hai.
+      EMI me <b>principal + interest</b> dono shamil hote hain.
+    </p>
+
+    <h3>EMI Calculation Includes</h3>
+    <ul>
+      <li>Loan amount (Principal)</li>
+      <li>Interest rate</li>
+      <li>Loan tenure</li>
+    </ul>
+
+    <p>
+      ⚠️ <b>Note:</b> Actual EMI bank policies ke hisaab se thoda vary ho sakta hai.
+    </p>
+  </div>
+</section>
+
+<!-- ================= MY SERVICES ================= -->
+<section class="container">
+  <div class="card" style="text-align:center;">
+    <h2>My Services</h2>
+    <p>Student-friendly digital services & tools available</p>
+
+    <ul style="list-style:none;padding:0;">
+      <li>✔ Portfolio Website for Students</li>
+      <li>✔ Blog & Content Websites</li>
+      <li>✔ Website Redesign</li>
+      <li>✔ Basic SEO Setup</li>
+      <li>✔ Online Tools & Calculators</li>
+    </ul>
+
+    <a href="../services.html" class="btn">View All Services</a>
+    &nbsp;
+    <a href="../contact.html" class="btn">Contact Me</a>
+  </div>
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div>
+      <h4>The Diploma Engineer</h4>
+      <p>
+        Diploma students ke liye blogs, online tools,
+        portfolio guidance aur student-friendly services.
+      </p>
+    </div>
+
+    <!-- BLOG LIST -->
+    <div>
+      <h4>Blogs</h4>
+      <a href="../blog/blog.html">All Blogs</a>
+      <a href="../blog/blog-1.html">AI Se Paise Kaise Kamaye</a>
+      <a href="../blog/blog-2.html">Top AI Tools for Students</a>
+      <a href="../blog/blog-3.html">Portfolio Website Guide</a>
+      <a href="../blog/blog-4.html">Freelancing Start Guide</a>
+      <a href="../blog/blog-5.html">SEO Basics</a>
+      <a href="../blog/blog-6.html">Online Earning Ideas</a>
+    </div>
+
+    <!-- TOOLS LIST -->
+    <div>
+      <h4>Tools</h4>
+      <a href="../tool/tool.html">All Tools</a>
+      <a href="../tool/sip-calculator.html">SIP Calculator</a>
+      <a href="../tool/emi-calculator.html">EMI Calculator</a>
+      <a href="../tool/percentage-calculator.html">Percentage Calculator</a>
+      <a href="../tool/cgpa-calculator.html">CGPA to Percentage</a>
+      <a href="../tool/simple-interest.html">Simple Interest</a>
+      <a href="../tool/compound-interest.html">Compound Interest</a>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div>
+      <h4>Quick Links</h4>
+      <a href="../index.html">Home</a>
+      <a href="../notes.html">Notes</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 <strong>The Diploma Engineer</strong> · All Rights Reserved
+  </div>
+
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+function calculateEMI() {
+  let P = parseFloat(document.getElementById("loanAmount").value);
+  let annualRate = parseFloat(document.getElementById("interestRate").value);
+  let years = parseFloat(document.getElementById("loanYears").value);
+
+  if (isNaN(P) || isNaN(annualRate) || isNaN(years)) {
+    document.getElementById("emiResult").innerText =
+      "Please enter valid values in all fields.";
+    return;
+  }
+
+  let N = years * 12;
+  let R = annualRate / 12 / 100;
+
+  let EMI = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+  let totalPayment = EMI * N;
+  let totalInterest = totalPayment - P;
+
+  document.getElementById("emiResult").innerHTML = `
+    <b>Monthly EMI:</b> ₹${Math.round(EMI)} <br>
+    <b>Total Interest:</b> ₹${Math.round(totalInterest)} <br>
+    <b>Total Amount Payable:</b> ₹${Math.round(totalPayment)}
+  `;
+}
+
+function openMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+function closeMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
