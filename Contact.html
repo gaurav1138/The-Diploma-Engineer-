@@ -16,29 +16,23 @@
 
 <body>
   
-  <!-- ===== TOP BAR ===== -->
-<div class="topbar">
-  <span class="menu-btn" onclick="openMenu()">☰</span>
-  <span class="logo">The Diploma Engineer</span>
-</div>
-
-<!-- ===== SIDEBAR ===== -->
+  <!-- ================= SIDEBAR ================= -->
 <div id="sidebar" class="sidebar">
   <span class="close-btn" onclick="closeMenu()">✕</span>
 
-  <h2>The Diploma Engineer</h2>
-
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="tool.html">Tools</a>
-  <a href="blog.html">Blog</a>
-  <a href="services.html">Services</a>
-  <a href="contact.html">Contact</a>
+  <h2>Menu</h2>
+  <a href="../index.html">Home</a>
+  <a href="../about.html">About</a>
+  <a href="../portfolio.html">Portfolio</a>
+  <a href="../notes.html">📘 Notes</a>
+  <a href="tool.html">🧰 Useful Tools</a>
+  <a href="../blog/blog.html">📝 Blog List</a>
+  <a href="../services.html">Services</a>
+  <a href="../contact.html">Contact</a>
 </div>
 
-<!-- ===== OVERLAY ===== -->
 <div id="overlay" onclick="closeMenu()"></div>
+  
 
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -213,6 +207,14 @@
 
 </footer>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js">
+function openMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+function closeMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}</script>
 </body>
 </html>
