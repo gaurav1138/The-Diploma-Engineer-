@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Notes | The Diploma Engineer</title>
+
+<meta name="description" content="Java, Python, JavaScript, Diploma and Engineering notes PDF – free download.">
+<meta name="keywords" content="Java Notes PDF, Python Notes, JavaScript Notes, Diploma Notes">
+<meta name="author" content="The Diploma Engineer">
+<meta name="robots" content="index, follow">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+/* Search bar */
+.search-box{
+  max-width:520px;
+  margin:20px auto;
+}
+.search-box input{
+  width:100%;
+  padding:12px 15px;
+  border-radius:8px;
+  border:1px solid #cbd5e1;
+  font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <span class="logo">The Diploma Engineer</span>
+</div>
+
+<!-- ================= SIDEBAR ================= -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✕</span>
+  <h2>Menu</h2>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="notes.html">📘 Notes</a>
+  <a href="tool/tool.html">🧰 Tools</a>
+  <a href="blog/blog.html">📝 Blogs</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div id="overlay" onclick="closeMenu()"></div>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <h1>Study Notes</h1>
+  <p>Diploma • Java • Python • JavaScript • Engineering Notes (PDF)</p>
+</section>
+
+<!-- ================= SEARCH ================= -->
+<div class="search-box">
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search subject / title (Java, Python, JS, Diploma...)"
+    onkeyup="filterNotes()">
+</div>
+
+<!-- ================= NOTES LIST ================= -->
+<section class="container">
+  <div id="notesList" class="grid"></div>
+</section>
+
+  <!-- ================= MY SERVICES ================= -->
+<section class="container">
+  <div class="card" style="text-align:center;">
+    <h2>My Services</h2>
+    <p>
+      Student-friendly digital services & tools available
+    </p>
+
+    <ul style="list-style:none;padding:0;">
+      <li>✔ Portfolio Website for Students</li>
+      <li>✔ Blog & Content Websites</li>
+      <li>✔ Website Redesign</li>
+      <li>✔ Basic SEO Setup</li>
+      <li>✔ Online Tools & Calculators</li>
+    </ul>
+
+    <a href="../services.html" class="btn">View All Services</a>
+    &nbsp;
+    <a href="../contact.html" class="btn">Contact Me</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+
+  <div class="footer-container">
+
+    <!-- BRAND -->
+    <div>
+      <h4>The Diploma Engineer</h4>
+      <p>
+        Diploma students ke liye blogs, online tools,
+        portfolio guidance aur student-friendly services.
+      </p>
+    </div>
+
+    <!-- BLOG LIST -->
+    <div>
+      <h4>Blogs</h4>
+      <a href="../blog/blog.html">All Blogs</a>
+      <a href="../blog/blog-1.html">AI Se Paise Kaise Kamaye</a>
+      <a href="../blog/blog-2.html">Top AI Tools for Students</a>
+      <a href="../blog/blog-3.html">Portfolio Website Guide</a>
+      <a href="../blog/blog-4.html">Freelancing Start Guide</a>
+      <a href="../blog/blog-5.html">SEO Basics</a>
+      <a href="../blog/blog-6.html">Online Earning Ideas</a>
+    </div>
+
+    <!-- TOOLS LIST -->
+    <div>
+      <h4>Tools</h4>
+      <a href="../tool/tool.html">All Tools</a>
+      <a href="../tool/sip-calculator.html">SIP Calculator</a>
+      <a href="../tool/emi-calculator.html">EMI Calculator</a>
+      <a href="../tool/percentage-calculator.html">Percentage Calculator</a>
+      <a href="../tool/cgpa-calculator.html">CGPA to Percentage</a>
+      <a href="../tool/simple-interest.html">Simple Interest</a>
+      <a href="../tool/compound-interest.html">Compound Interest</a>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div>
+      <h4>Quick Links</h4>
+      <a href="../index.html">Home</a>
+      <a href="../notes.html">Notes</a>
+      <a href="../portfolio.html">Portfolio</a>
+      <a href="../services.html">Services</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    © 2025 <strong>The Diploma Engineer</strong> · All Rights Reserved
+  </div>
+
+</footer>
+
+<!-- ================= JS ================= -->
+<script>
+const sheetId = "1kOGo2lRpRT4Vkfe6k681NnXJXk6aOy8hwNVh_BC17pI";
+const sheetName = "Sheet1";
+
+const url = `https://opensheet.elk.sh/${sheetId}/${sheetName}`;
+let notesData = [];
+
+fetch(url)
+  .then(res => res.json())
+  .then(data => {
+    notesData = data;
+    renderNotes(data);
+  })
+  .catch(() => {
+    document.getElementById("notesList").innerHTML =
+      "<p>Notes load nahi ho rahe. Sheet sharing check karo.</p>";
+  });
+
+function renderNotes(data){
+  let output = "";
+  data.forEach(note => {
+    output += `
+      <div class="card">
+        <h3>${note.Subject || "No Subject"}</h3>
+        <p>${note.Title || ""}</p>
+        <a href="${note.PDF_Link}" target="_blank" class="btn">
+          📄 View / Download PDF
+        </a>
+      </div>
+    `;
+  });
+  document.getElementById("notesList").innerHTML = output;
+}
+
+function filterNotes(){
+  let keyword = document.getElementById("searchInput").value.toLowerCase();
+
+  let filtered = notesData.filter(note =>
+    (note.Subject && note.Subject.toLowerCase().includes(keyword)) ||
+    (note.Title && note.Title.toLowerCase().includes(keyword))
+  );
+
+  renderNotes(filtered);
+}
+
+function openMenu() {
+  document.getElementById("sidebar").style.left = "0";
+  document.getElementById("overlay").style.display = "block";
+}
+function closeMenu() {
+  document.getElementById("sidebar").style.left = "-260px";
+  document.getElementById("overlay").style.display = "none";
+}
+</script>
+
+</body>
+</html>
