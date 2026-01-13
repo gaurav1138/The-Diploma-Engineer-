@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Environmental Studies Quiz | The Diploma Engineer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/assets/css/style.css">
+</head>
+
+<body>
+
+<!-- ===== TOP BAR ===== -->
+<div class="topbar">
+  <span class="menu-btn" onclick="openMenu()">☰</span>
+  <span class="logo">The Diploma Engineer</span>
+</div>
+
+<!-- ===== SIDEBAR ===== -->
+<div id="sidebar" class="sidebar">
+  <span class="close-btn" onclick="closeMenu()">✕</span>
+
+  <h2>Menu</h2>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="notes.html">📘 Notes</a>
+  <a href="tests.html">🧪 Environmental Studies Quiz</a>
+  <a href="services.html">Services</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div id="overlay" onclick="closeMenu()"></div>
+
+<div class="container">
+
+<h1 id="testTitle">Environmental Studies Test</h1>
+
+<!-- ===== EVS INFORMATION ===== -->
+<div class="card">
+  <h2>About Environmental Studies (EVS)</h2>
+  <p>
+    Environmental Studies is a compulsory subject for all Diploma
+    Engineering branches. It helps students understand environmental
+    issues, sustainability and human–nature relationship.
+  </p>
+  <ul>
+    <li>🌱 Pollution & control</li>
+    <li>🌍 Ecosystem & biodiversity</li>
+    <li>♻ Sustainable development</li>
+    <li>⚖ Environmental laws & ethics</li>
+  </ul>
+</div>
+
+<!-- ===== QUIZ BOX ===== -->
+<div class="card" id="quizBox">
+  <p id="timer">Time Left: 01:00:00</p>
+  <p id="progress"></p>
+  <h3 id="question">Loading...</h3>
+  <div id="options"></div>
+
+  <button class="btn" onclick="nextQ()">Next</button>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div class="card" id="resultBox" style="display:none;">
+  <h2>Test Completed</h2>
+  <p id="score"></p>
+  <a href="tests.html" class="btn">Back to Tests</a>
+</div>
+
+</div>
+
+<script>
+// ===== LOAD TEST =====
+const testNo = new URLSearchParams(window.location.search).get("test");
+document.getElementById("testTitle").innerText =
+  "Environmental Studies Test – " + testNo;
+
+const csvFile = `data/evs-test-${testNo}.csv`;
+
+let questions=[], index=0, answers=[];
+let totalSeconds = 3600;
+
+// LOAD CSV
+fetch(csvFile)
+.then(r=>r.text())
+.then(text=>{
+  const rows = text.trim().split("\n").slice(1);
+  questions = rows.map(r=>r.split(","));
+  startTimer();
+  showQ();
+});
+
+function startTimer(){
+  setInterval(()=>{
+    totalSeconds--;
+    let h=Math.floor(totalSeconds/3600);
+    let m=Math.floor((totalSeconds%3600)/60);
+    let s=totalSeconds%60;
+    document.getElementById("timer").innerText =
+      `Time Left: ${String(h).padStart(2,0)}:${String(m).padStart(2,0)}:${String(s).padStart(2,0)}`;
+    if(totalSeconds<=0) showResult();
+  },1000);
+}
+
+function showQ(){
+  const q=questions[index];
+  document.getElementById("progress").innerText =
+    `Question ${index+1} of ${questions.length}`;
+  document.getElementById("question").innerText = q[0];
+  let html="";
+  for(let i=1;i<=4;i++){
+    html+=`<div class="option" onclick="select(${i})">${q[i]}</div>`;
+  }
+  document.getElementById("options").innerHTML=html;
+}
+
+function select(i){
+  answers[index]=i;
+}
+
+function nextQ(){
+  index++;
+  if(index<questions.length) showQ();
+  else showResult();
+}
+
+function showResult(){
+  let score=0;
+  for(let i=0;i<questions.length;i++)
+    if(answers[i]==questions[i][5]) score++;
+  document.getElementById("quizBox").style.display="none";
+  document.getElementById("resultBox").style.display="block";
+  document.getElementById("score").innerText =
+    `Score: ${score} / ${questions.length}`;
+}
+</script>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
