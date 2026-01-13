@@ -27,165 +27,193 @@
 
 <div id="overlay" onclick="closeMenu()"></div>
 
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+
 <div class="container">
 
-<h1 id="testTitle">Environmental Studies Test</h1>
-
-<!-- ===== EVS INFORMATION ===== -->
+<!-- ===== TEST HEADING & INFO ===== -->
 <div class="card">
-  <h2>About Environmental Studies (EVS)</h2>
-  <p>
-    Environmental Studies is a compulsory subject for all Diploma
-    Engineering branches. It helps students understand environmental
-    issues, sustainability and human–nature relationship.
-  </p>
-  <ul>
-    <li>🌱 Pollution & control</li>
-    <li>🌍 Ecosystem & biodiversity</li>
-    <li>♻ Sustainable development</li>
-    <li>⚖ Environmental laws & ethics</li>
-  </ul>
+  <h2>Environmental Studies – Test 1</h2>
+
+  <div class="info">
+    <p><b>Total Questions:</b> 75</p>
+    <p><b>Time Duration:</b> 1 Hour (60 Minutes)</p>
+    <p><b>Instructions:</b></p>
+    <ul>
+      <li>Each question has 4 options</li>
+      <li>Only one option is correct</li>
+      <li>You can use Next & Previous buttons</li>
+      <li>Questions appear in random order</li>
+      <li>Final score will be shown after test completion</li>
+    </ul>
+  </div>
 </div>
 
-<!-- ===== QUIZ BOX ===== -->
-<div class="card" id="quizBox">
-  <p id="timer">Time Left: 01:00:00</p>
-  <p id="progress"></p>
+<!-- ===== STUDENT DETAILS ===== -->
+<div class="card" id="studentBox">
+  <h3>Start Test</h3>
+  <input type="text" id="studentName" placeholder="Enter Student Name">
+  <input type="text" id="rollNo" placeholder="Enter Roll Number">
+  <button class="btn" onclick="startTest()">Start Test</button>
+</div>
+
+<!-- ===== TEST BOX ===== -->
+<div class="card" id="testBox" style="display:none">
+  <p class="timer" id="timer">Time Left: 60:00</p>
   <h3 id="question">Loading...</h3>
   <div id="options"></div>
 
-  <button class="btn" onclick="nextQ()">Next</button>
+  <div class="btn-group">
+    <button class="btn" onclick="prevQ()">⬅ Previous</button>
+    <button class="btn" onclick="nextQ()">Next ➡</button>
+  </div>
 </div>
 
 <!-- ===== RESULT ===== -->
-<div class="card" id="resultBox" style="display:none;">
-  <h2>Test Completed</h2>
-  <p id="score"></p>
-  <a href="tests.html" class="btn">Back to Tests</a>
+<div class="card" id="resultBox" style="display:none">
+  <h2>Advanced Score Card</h2>
+
+  <p><b>Name:</b> <span id="rName"></span></p>
+  <p><b>Roll No:</b> <span id="rRoll"></span></p>
+
+  <hr>
+
+  <p>Total Questions: <b id="rTotal"></b></p>
+  <p>Attempted: <b id="rAttempted"></b></p>
+  <p>Correct: <b id="rCorrect"></b></p>
+  <p>Wrong: <b id="rWrong"></b></p>
+  <p>Unattempted: <b id="rUnattempted"></b></p>
+  <p>Percentage: <b id="rPercent"></b>%</p>
+  <h3 id="rStatus"></h3>
+</div>
+
+<!-- ===== TEST LIST (BUTTONS) ===== -->
+<div class="card">
+  <h1>Environmental</h1>
+  <h3>EVS Online Tests</h3>
+  <a class="test-btn" href="evs-test.html?test=Test1">Start EVS Test 1</a>
+  <a class="test-btn" href="evs-test.html?test=Test2">Start EVS Test 2</a>
+  <a class="test-btn" href="evs-test.html?test=Test3">Start EVS Test 3</a>
+  <a class="test-btn" href="evs-test.html?test=Test4">Start EVS Test 4</a>
+  <a class="test-btn" href="evs-test.html?test=Test5">Start EVS Test 5</a>
+  <a class="test-btn" href="evs-test.html?test=Test6">Start EVS Test 6</a>
+  <a class="test-btn" href="evs-test.html?test=Test7">Start EVS Test 7</a>
+  <a class="test-btn" href="evs-test.html?test=Test8">Start EVS Test 8</a>
+  <a class="test-btn" href="evs-test.html?test=Test9">Start EVS Test 9</a>
+  <a class="test-btn" href="evs-test.html?test=Test10">Start EVS Test 10</a>
 </div>
 
 </div>
 
 <script>
-// ===== LOAD TEST NUMBER =====
-const testNo = new URLSearchParams(window.location.search).get("test");
+google.charts.load("current",{packages:["table"]});
 
-document.getElementById("testTitle").innerText =
-  "Environmental Studies Test – " + testNo;
+const SHEET_ID="17a82sn_wOH1uzskxG4OC9YV6Yveo7Ibb";
+const urlParams=new URLSearchParams(window.location.search);
+const TEST_NAME=urlParams.get("test")||"Test1";
 
-// ✅ CORRECT CSV PATH (STRING)
-const csvFile = `evs-tests/data/evs-test-${testNo}.csv`;
+let questions=[],current=0,answers=[];
+let time=3600,timerInterval;
+let sName="",sRoll="";
 
-let questions = [];
-let index = 0;
-let answers = [];
-let totalSeconds = 3600; // 1 hour
-
-// ===== CSV PARSER (SAFE) =====
-function parseCSV(text){
-  const lines = text.trim().split(/\r?\n/);
-  const data = [];
-
-  for(let i = 1; i < lines.length; i++){
-    const row = lines[i].split(",");
-
-    if(row.length < 6) continue;
-    if(!row[0]) continue;
-
-    data.push({
-      question: row[0].trim(),
-      options: [
-        row[1].trim(),
-        row[2].trim(),
-        row[3].trim(),
-        row[4].trim()
-      ],
-      answer: parseInt(row[5].trim())
-    });
-  }
-  return data;
+function startTest(){
+  sName=document.getElementById("studentName").value.trim();
+  sRoll=document.getElementById("rollNo").value.trim();
+  if(!sName||!sRoll){alert("Enter Name & Roll Number");return;}
+  document.getElementById("studentBox").style.display="none";
+  document.getElementById("testBox").style.display="block";
+  loadData();
 }
 
-// ===== LOAD CSV =====
-fetch(csvFile)
-  .then(res => {
-    if(!res.ok) throw new Error("CSV not found");
-    return res.text();
-  })
-  .then(text => {
-    questions = parseCSV(text);
+function loadData(){
+  questions=[]; current=0; answers=[];
+  const query=new google.visualization.Query(
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${TEST_NAME}`
+  );
+  query.send(res=>{
+    const d=res.getDataTable();
+    for(let i=0;i<d.getNumberOfRows();i++){
+      const q=d.getValue(i,0);
+      if(!q) continue;
+      questions.push([
+        q,d.getValue(i,1),d.getValue(i,2),
+        d.getValue(i,3),d.getValue(i,4),
+        d.getValue(i,5)
+      ]);
+    }
+    shuffle();
     startTimer();
     showQ();
-  })
-  .catch(err => {
-    document.getElementById("question").innerText =
-      "❌ CSV file load nahi ho rahi. Path check karo.";
-    console.error(err);
   });
+}
 
-// ===== TIMER =====
+function shuffle(){
+  for(let i=questions.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [questions[i],questions[j]]=[questions[j],questions[i]];
+  }
+}
+
 function startTimer(){
-  const interval = setInterval(()=>{
-    totalSeconds--;
-
-    let h = Math.floor(totalSeconds / 3600);
-    let m = Math.floor((totalSeconds % 3600) / 60);
-    let s = totalSeconds % 60;
-
-    document.getElementById("timer").innerText =
-      `Time Left: ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
-
-    if(totalSeconds <= 0){
-      clearInterval(interval);
-      showResult();
-    }
+  timerInterval=setInterval(()=>{
+    time--;
+    let m=Math.floor(time/60),s=time%60;
+    document.getElementById("timer").innerText=`Time Left: ${m}:${s<10?"0"+s:s}`;
+    if(time<=0)finish();
   },1000);
 }
 
-// ===== SHOW QUESTION =====
 function showQ(){
-  const q = questions[index];
-
-  document.getElementById("progress").innerText =
-    `Question ${index+1} of ${questions.length}`;
-
-  document.getElementById("question").innerText = q.question;
-
-  let html = "";
-  q.options.forEach((opt,i)=>{
-    html += `<div class="option" onclick="select(${i+1})">${opt}</div>`;
-  });
-
-  document.getElementById("options").innerHTML = html;
+  if(current>=questions.length){finish();return;}
+  const q=questions[current];
+  document.getElementById("question").innerText=`Q${current+1}. ${q[0]}`;
+  let h="";
+  for(let i=1;i<=4;i++){
+    let c="";
+    if(answers[current]){
+      if(i==q[5])c="correct";
+      else if(i==answers[current])c="wrong";
+    }
+    h+=`<div class="option ${c}" onclick="sel(${i})">${q[i]}</div>`;
+  }
+  document.getElementById("options").innerHTML=h;
 }
 
-// ===== SELECT ANSWER =====
-function select(choice){
-  answers[index] = choice;
-}
+function sel(i){answers[current]=i;showQ();}
+function nextQ(){if(current<questions.length)current++;showQ();}
+function prevQ(){if(current>0)current--;showQ();}
 
-// ===== NEXT =====
-function nextQ(){
-  index++;
-  if(index < questions.length) showQ();
-  else showResult();
-}
+function finish(){
+  clearInterval(timerInterval);
+  let correct=0,attempted=0;
+  for(let i=0;i<questions.length;i++){
+    if(answers[i]){
+      attempted++;
+      if(answers[i]==questions[i][5])correct++;
+    }
+  }
+  let wrong=attempted-correct;
+  let unattempted=questions.length-attempted;
+  let percent=Math.round((correct/questions.length)*100);
 
-// ===== RESULT =====
-function showResult(){
-  let score = 0;
-  questions.forEach((q,i)=>{
-    if(answers[i] === q.answer) score++;
-  });
+  document.getElementById("testBox").style.display="none";
+  document.getElementById("resultBox").style.display="block";
 
-  document.getElementById("quizBox").style.display = "none";
-  document.getElementById("resultBox").style.display = "block";
-  document.getElementById("score").innerText =
-    `Score: ${score} / ${questions.length}`;
+  document.getElementById("rName").innerText=sName;
+  document.getElementById("rRoll").innerText=sRoll;
+  document.getElementById("rTotal").innerText=questions.length;
+  document.getElementById("rAttempted").innerText=attempted;
+  document.getElementById("rCorrect").innerText=correct;
+  document.getElementById("rWrong").innerText=wrong;
+  document.getElementById("rUnattempted").innerText=unattempted;
+  document.getElementById("rPercent").innerText=percent;
+  document.getElementById("rStatus").innerHTML=
+    percent>=40?'<span class="pass">PASS ✅</span>':'<span class="fail">FAIL ❌</span>';
 }
 </script>
-  
-  <script src="../assets/js/main.js"></script>
-  
+
 </body>
 </html>
