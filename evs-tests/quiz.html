@@ -72,7 +72,7 @@ const testNo = new URLSearchParams(window.location.search).get("test");
 document.getElementById("testTitle").innerText =
   "Environmental Studies Test – " + testNo;
 
-const csvFile = `data/evs-test-${testNo}.csv`;
+const csvFile = `evs-tests/data/evs-test-${testNo}.csv;
 
 let questions=[], index=0, answers=[];
 let totalSeconds = 3600;
