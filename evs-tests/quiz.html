@@ -67,71 +67,124 @@
 </div>
 
 <script>
-// ===== LOAD TEST =====
+// ===== LOAD TEST NUMBER =====
 const testNo = new URLSearchParams(window.location.search).get("test");
+
 document.getElementById("testTitle").innerText =
   "Environmental Studies Test – " + testNo;
 
-const csvFile = `evs-tests/data/evs-test-${testNo}.csv;
+// ✅ CORRECT CSV PATH (STRING)
+const csvFile = `evs-tests/data/evs-test-${testNo}.csv`;
 
-let questions=[], index=0, answers=[];
-let totalSeconds = 3600;
+let questions = [];
+let index = 0;
+let answers = [];
+let totalSeconds = 3600; // 1 hour
 
-// LOAD CSV
+// ===== CSV PARSER (SAFE) =====
+function parseCSV(text){
+  const lines = text.trim().split(/\r?\n/);
+  const data = [];
+
+  for(let i = 1; i < lines.length; i++){
+    const row = lines[i].split(",");
+
+    if(row.length < 6) continue;
+    if(!row[0]) continue;
+
+    data.push({
+      question: row[0].trim(),
+      options: [
+        row[1].trim(),
+        row[2].trim(),
+        row[3].trim(),
+        row[4].trim()
+      ],
+      answer: parseInt(row[5].trim())
+    });
+  }
+  return data;
+}
+
+// ===== LOAD CSV =====
 fetch(csvFile)
-.then(r=>r.text())
-.then(text=>{
-  const rows = text.trim().split("\n").slice(1);
-  questions = rows.map(r=>r.split(","));
-  startTimer();
-  showQ();
-});
+  .then(res => {
+    if(!res.ok) throw new Error("CSV not found");
+    return res.text();
+  })
+  .then(text => {
+    questions = parseCSV(text);
+    startTimer();
+    showQ();
+  })
+  .catch(err => {
+    document.getElementById("question").innerText =
+      "❌ CSV file load nahi ho rahi. Path check karo.";
+    console.error(err);
+  });
 
+// ===== TIMER =====
 function startTimer(){
-  setInterval(()=>{
+  const interval = setInterval(()=>{
     totalSeconds--;
-    let h=Math.floor(totalSeconds/3600);
-    let m=Math.floor((totalSeconds%3600)/60);
-    let s=totalSeconds%60;
+
+    let h = Math.floor(totalSeconds / 3600);
+    let m = Math.floor((totalSeconds % 3600) / 60);
+    let s = totalSeconds % 60;
+
     document.getElementById("timer").innerText =
-      `Time Left: ${String(h).padStart(2,0)}:${String(m).padStart(2,0)}:${String(s).padStart(2,0)}`;
-    if(totalSeconds<=0) showResult();
+      `Time Left: ${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+
+    if(totalSeconds <= 0){
+      clearInterval(interval);
+      showResult();
+    }
   },1000);
 }
 
+// ===== SHOW QUESTION =====
 function showQ(){
-  const q=questions[index];
+  const q = questions[index];
+
   document.getElementById("progress").innerText =
     `Question ${index+1} of ${questions.length}`;
-  document.getElementById("question").innerText = q[0];
-  let html="";
-  for(let i=1;i<=4;i++){
-    html+=`<div class="option" onclick="select(${i})">${q[i]}</div>`;
-  }
-  document.getElementById("options").innerHTML=html;
+
+  document.getElementById("question").innerText = q.question;
+
+  let html = "";
+  q.options.forEach((opt,i)=>{
+    html += `<div class="option" onclick="select(${i+1})">${opt}</div>`;
+  });
+
+  document.getElementById("options").innerHTML = html;
 }
 
-function select(i){
-  answers[index]=i;
+// ===== SELECT ANSWER =====
+function select(choice){
+  answers[index] = choice;
 }
 
+// ===== NEXT =====
 function nextQ(){
   index++;
-  if(index<questions.length) showQ();
+  if(index < questions.length) showQ();
   else showResult();
 }
 
+// ===== RESULT =====
 function showResult(){
-  let score=0;
-  for(let i=0;i<questions.length;i++)
-    if(answers[i]==questions[i][5]) score++;
-  document.getElementById("quizBox").style.display="none";
-  document.getElementById("resultBox").style.display="block";
+  let score = 0;
+  questions.forEach((q,i)=>{
+    if(answers[i] === q.answer) score++;
+  });
+
+  document.getElementById("quizBox").style.display = "none";
+  document.getElementById("resultBox").style.display = "block";
   document.getElementById("score").innerText =
     `Score: ${score} / ${questions.length}`;
 }
 </script>
-
+  
   <script src="../assets/js/main.js"></script>
   
 </body>
