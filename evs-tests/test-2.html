@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Environmental Studies Online Test | The Diploma Engineer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{margin:0;font-family:Arial;background:#f1f5f9}
+.container{max-width:900px;margin:20px auto;padding:10px}
+.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,0.1);margin-bottom:20px}
+h2{color:#1e3a8a}
+.info{background:#f8fafc;border-left:4px solid #2563eb;padding:12px;margin-top:10px}
+.option{border:1px solid #cbd5e1;padding:10px;margin:8px 0;border-radius:6px;cursor:pointer}
+.option:hover{background:#e0f2fe}
+.correct{background:#dcfce7;border-color:#16a34a}
+.wrong{background:#fee2e2;border-color:#dc2626}
+.btn{padding:10px 16px;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#1e40af}
+.btn-group{display:flex;justify-content:space-between;margin-top:15px}
+.timer{color:#dc2626;font-weight:bold}
+input{padding:8px;width:100%;margin-bottom:10px}
+.pass{color:#16a34a;font-weight:bold}
+.fail{color:#dc2626;font-weight:bold}
+.test-list a{display:block;margin:6px 0;color:#2563eb;text-decoration:none}
+.test-list a:hover{text-decoration:underline}
+/* ===== TEST BUTTONS ===== */
+.test-btn{
+  display:block;
+  text-align:center;
+  margin:8px 0;
+  padding:12px;
+  background:#2563eb;
+  color:#fff;
+  border-radius:6px;
+}
+.test-btn:hover{background:#2563eb}
+</style>
+
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ===== TEST HEADING & INFO ===== -->
+<div class="card">
+  <h2>Environmental Studies – Test 2</h2>
+
+  <div class="info">
+    <p><b>Total Questions:</b> 75</p>
+    <p><b>Time Duration:</b> 1 Hour (60 Minutes)</p>
+    <p><b>Instructions:</b></p>
+    <ul>
+      <li>Each question has 4 options</li>
+      <li>Only one option is correct</li>
+      <li>You can use Next & Previous buttons</li>
+      <li>Questions appear in random order</li>
+      <li>Final score will be shown after test completion</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== STUDENT DETAILS ===== -->
+<div class="card" id="studentBox">
+  <h3>Start Test</h3>
+  <input type="text" id="studentName" placeholder="Enter Student Name">
+  <input type="text" id="rollNo" placeholder="Enter Roll Number">
+  <button class="btn" onclick="startTest()">Start Test</button>
+</div>
+
+<!-- ===== TEST BOX ===== -->
+<div class="card" id="testBox" style="display:none">
+  <p class="timer" id="timer">Time Left: 60:00</p>
+  <h3 id="question">Loading...</h3>
+  <div id="options"></div>
+
+  <div class="btn-group">
+    <button class="btn" onclick="prevQ()">⬅ Previous</button>
+    <button class="btn" onclick="nextQ()">Next ➡</button>
+  </div>
+</div>
+
+<!-- ===== RESULT ===== -->
+<div class="card" id="resultBox" style="display:none">
+  <h2>Advanced Score Card</h2>
+
+  <p><b>Name:</b> <span id="rName"></span></p>
+  <p><b>Roll No:</b> <span id="rRoll"></span></p>
+
+  <hr>
+
+  <p>Total Questions: <b id="rTotal"></b></p>
+  <p>Attempted: <b id="rAttempted"></b></p>
+  <p>Correct: <b id="rCorrect"></b></p>
+  <p>Wrong: <b id="rWrong"></b></p>
+  <p>Unattempted: <b id="rUnattempted"></b></p>
+  <p>Percentage: <b id="rPercent"></b>%</p>
+  <h3 id="rStatus"></h3>
+</div>
+
+<!-- ===== TEST LIST (BUTTONS) ===== -->
+<div class="card">
+  <h1>Environmental</h1>
+  <h3>EVS Online Tests</h3>
+  <a class="test-btn" href="evs-quiz.html">Reset Test</a>
+</div>
+
+</div>
+
+<script>
+google.charts.load("current",{packages:["table"]});
+
+const SHEET_ID="1KOrA8lGNWX3WRRtj1WH2q26hnkZo-qtMej_sm7JYVzY";
+const urlParams=new URLSearchParams(window.location.search);
+const TEST_NAME=urlParams.get("test")||"Test1";
+
+let questions=[],current=0,answers=[];
+let time=3600,timerInterval;
+let sName="",sRoll="";
+
+function startTest(){
+  sName=document.getElementById("studentName").value.trim();
+  sRoll=document.getElementById("rollNo").value.trim();
+  if(!sName||!sRoll){alert("Enter Name & Roll Number");return;}
+  document.getElementById("studentBox").style.display="none";
+  document.getElementById("testBox").style.display="block";
+  loadData();
+}
+
+function loadData(){
+  questions=[]; current=0; answers=[];
+  const query=new google.visualization.Query(
+    `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${TEST_NAME}`
+  );
+  query.send(res=>{
+    const d=res.getDataTable();
+    for(let i=0;i<d.getNumberOfRows();i++){
+      const q=d.getValue(i,0);
+      if(!q) continue;
+      questions.push([
+        q,d.getValue(i,1),d.getValue(i,2),
+        d.getValue(i,3),d.getValue(i,4),
+        d.getValue(i,5)
+      ]);
+    }
+    shuffle();
+    startTimer();
+    showQ();
+  });
+}
+
+function shuffle(){
+  for(let i=questions.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [questions[i],questions[j]]=[questions[j],questions[i]];
+  }
+}
+
+function startTimer(){
+  timerInterval=setInterval(()=>{
+    time--;
+    let m=Math.floor(time/60),s=time%60;
+    document.getElementById("timer").innerText=`Time Left: ${m}:${s<10?"0"+s:s}`;
+    if(time<=0)finish();
+  },1000);
+}
+
+function showQ(){
+  if(current>=questions.length){finish();return;}
+  const q=questions[current];
+  document.getElementById("question").innerText=`Q${current+1}. ${q[0]}`;
+  let h="";
+  for(let i=1;i<=4;i++){
+    let c="";
+    if(answers[current]){
+      if(i==q[5])c="correct";
+      else if(i==answers[current])c="wrong";
+    }
+    h+=`<div class="option ${c}" onclick="sel(${i})">${q[i]}</div>`;
+  }
+  document.getElementById("options").innerHTML=h;
+}
+
+function sel(i){answers[current]=i;showQ();}
+function nextQ(){if(current<questions.length)current++;showQ();}
+function prevQ(){if(current>0)current--;showQ();}
+
+function finish(){
+  clearInterval(timerInterval);
+  let correct=0,attempted=0;
+  for(let i=0;i<questions.length;i++){
+    if(answers[i]){
+      attempted++;
+      if(answers[i]==questions[i][5])correct++;
+    }
+  }
+  let wrong=attempted-correct;
+  let unattempted=questions.length-attempted;
+  let percent=Math.round((correct/questions.length)*100);
+
+  document.getElementById("testBox").style.display="none";
+  document.getElementById("resultBox").style.display="block";
+
+  document.getElementById("rName").innerText=sName;
+  document.getElementById("rRoll").innerText=sRoll;
+  document.getElementById("rTotal").innerText=questions.length;
+  document.getElementById("rAttempted").innerText=attempted;
+  document.getElementById("rCorrect").innerText=correct;
+  document.getElementById("rWrong").innerText=wrong;
+  document.getElementById("rUnattempted").innerText=unattempted;
+  document.getElementById("rPercent").innerText=percent;
+  document.getElementById("rStatus").innerHTML=
+    percent>=40?'<span class="pass">PASS ✅</span>':'<span class="fail">FAIL ❌</span>';
+}
+</script>
+
+</body>
+</html>
